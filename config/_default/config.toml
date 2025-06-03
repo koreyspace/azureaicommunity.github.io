@@ -1,7 +1,8 @@
 baseURL = "https://pnp.github.io/"
 languageCode = "en-us"
-title = "Microsoft 365 & Power Platform Community"
+title = "Azure Foundry Community"
 theme = "pnp-hugo-theme"
+buildFuture = true
 
 [server]
 watch = true
@@ -20,9 +21,9 @@ url = "#events"
 weight = 20
 
 [[menus.main]]
-identifier = "guidance"
-name = "Guidance"
-url = "#guidance"
+identifier = "courses"
+name = "Courses"
+url = "#courses"
 weight = 30
 
 [[menus.main]]
@@ -50,20 +51,20 @@ url = "#team"
 weight = 70
 
 [params]
-description = "Learn from others how to build apps on Microsoft 365 & Power Platform."
+description = "Learn from others and product experts on building AI applications with Azure AI Foundry"
 callToAction = "Changing the world one contribution at a time!"
-tagline = "<p>Learn from others how to build apps on Microsoft 365 & Power Platform.</p><p>Don't reinvent the wheel. Focus on what truly matters for your organization.</p>"
+tagline = "<p>Learn from others how to build AI apps on Azure AI Foundry.</p><p>Don't build alone.</p>"
 rssFeedUrl = "https://pnp.github.io/blog/index.xml"
-smallLogo = [ "Microsoft 365 &", "Power Platform", "Community"]
+smallLogo = [ "Azure AI Foundry", "Community"]
 disablePnPTelemetry = true
 logo = "pnp.svg"
 alternateName = "PnP"
 
 [[params.bigLogo]]
-line = "Microsoft 365 &"
+line = "Azure"
 
 [[params.bigLogo]]
-line = "Power Platform"
+line = "AI Foundry"
 class = "fa-pp"
 
 [[params.bigLogo]]

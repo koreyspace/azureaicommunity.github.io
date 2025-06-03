@@ -1,0 +1,12 @@
+<div class="events-feed-section">
+    {{ $section := .Site.GetPage "section" "events" }}
+    {{ if $section.Pages }}
+    <menu class="section-grid">
+        {{ range first 3 (sort $section.Pages "Weight" "asc") -}}
+        <li>
+            {{ partial "pnpstyles/organisms-event-card" .Params }}
+        </li>
+        {{- end }}
+    </menu>
+    {{ end }}
+</div>

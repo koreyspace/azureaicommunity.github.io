@@ -1,9 +1,8 @@
 ---
-title: "Sharing is Caring!"
+title: "Join the converstation and get support below:"
 type: "hero"
 weight: 10
 ---
 
-Learn from others how to build apps on Microsoft 365 & Power Platform.
+Learn from others and product experts on building AI applications with Azure AI Foundry.
 
-Don't reinvent the wheel. Focus on what truly matters for your organization.

@@ -1,0 +1,190 @@
+<section class="section-base events-feed" id="{{ .File.BaseFileName | safeHTML }}">
+    <div class="section-inner">
+        <header class="section-header">
+            <h1>{{.Title | safeHTML }}</h1>
+            <p>{{.Description | safeHTML }}</p>
+        </header>
+
+        <menu class="section-grid">
+            <!-- Get content directory events that are not drafts and sort by date -->
+            {{ $allPages := .Site.Pages }}
+            {{ $sectionPages := where $allPages "Section" "upcoming-events" }}
+            {{ $contentPages := where $sectionPages "Kind" "page" }}
+            {{ $nonDraftPages := where $contentPages ".Params.draft" "ne" true }}
+            {{ $sortedEvents := sort $nonDraftPages ".Date" }}
+            
+            <!-- Check if any events exist -->
+            {{ if eq (len $sortedEvents) 0 }}
+                <div class="no-events-message">No upcoming events scheduled at this time. Check back soon!</div>
+            {{ else }}
+                <!-- Display events from content directory -->
+                {{ range $sortedEvents }}
+                <li>
+                    <article class="card event">
+                        <div class="event-main">
+                            <header class="event-header">
+                                <h3 class="event-title">{{ .Title }}</h3>
+                                <time class="event-date" datetime="{{ .Date.Format "2006-01-02" }}">
+                                    {{ .Date.Format "Monday, January 2, 2006" }}
+                                </time>
+                                {{ with .Params.time }}
+                                <div class="event-time">{{ . }}</div>
+                                {{ end }}
+                                {{ with .Params.location }}
+                                <div class="event-location">📍 {{ . }}</div>
+                                {{ end }}
+                            </header>
+                            
+                            <div class="event-description">
+                                {{ with .Params.description }}
+                                {{ . }}
+                                {{ else }}
+                                {{ .Summary | truncate 150 }}
+                                {{ end }}
+                            </div>
+                            
+                            <div class="event-actions">
+                                {{ with .Params.calendarLink }}
+                                <a href="{{ . }}" class="event-button calendar" target="_blank" rel="noopener">
+                                    <span class="icon">📅</span> Add to Calendar
+                                </a>
+                                {{ end }}
+                                
+                                {{ with .Params.joinLink }}
+                                <a href="{{ . }}" class="event-button join" target="_blank" rel="noopener">
+                                    <span class="icon">🔗</span> Join Event
+                                </a>
+                                {{ end }}
+                            </div>
+                        </div>
+                    </article>
+                </li>
+                {{ end }}
+            {{ end }}
+        </menu>
+
+        {{ with .Content }}
+        <div class="calltoaction">
+            {{ . | safeHTML }}
+        </div>
+        {{ end }}
+    </div>
+</section>
+
+<style>
+    .events-feed .section-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        list-style: none;
+        padding: 0;
+        margin: 2rem 0;
+    }
+
+    .events-feed .card.event {
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .events-feed .card.event:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+
+    .events-feed .event-main {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .events-feed .event-header {
+        margin-bottom: 1rem;
+    }
+
+    .events-feed .event-title {
+        font-size: 1.4rem;
+        margin: 0 0 0.5rem 0;
+        color: #333;
+    }
+
+    .events-feed .event-date {
+        display: block;
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #0078d4;
+        margin-bottom: 0.25rem;
+    }
+
+    .events-feed .event-time,
+    .events-feed .event-location {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 0.25rem;
+    }
+
+    .events-feed .event-description {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: #555;
+        flex-grow: 1;
+        margin-bottom: 1.5rem;
+    }
+
+    .events-feed .event-actions {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: auto;
+        flex-wrap: wrap;
+    }
+
+    .events-feed .event-button {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .events-feed .event-button.calendar {
+        background-color: #f0f0f0;
+        color: #333;
+    }
+
+    .events-feed .event-button.join {
+        background-color: #0078d4;
+        color: white;
+    }
+
+    .events-feed .event-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .events-feed .event-button .icon {
+        margin-right: 0.5rem;
+    }
+
+    .events-feed .no-events-message {
+        grid-column: 1/-1;
+        text-align: center;
+        padding: 3rem;
+        font-size: 1.1rem;
+        color: #666;
+    }
+
+    @media (max-width: 768px) {
+        .events-feed .section-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

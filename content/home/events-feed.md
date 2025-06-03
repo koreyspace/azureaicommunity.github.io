@@ -1,7 +1,8 @@
 ---
-title: "Upcoming Events"
-draft: false
+title: "Upcoming Community Events"
+description: "Join us at upcoming events and connect with the community"
 type: "events-feed"
-description: "Don't miss out, these next two weeks are going to be busy!"
-weight: 35
+weight: 20
 ---
+
+Want to submit an event? [Contact us](mailto:events@example.com)

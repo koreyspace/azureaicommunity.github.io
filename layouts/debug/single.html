@@ -1,0 +1,52 @@
+<![CDATA[<html>
+<head>
+    <title>Debug Page</title>
+</head>
+<body>
+    <h1>Debug Information</h1>
+    
+    <h2>All Pages ({{ len .Site.Pages }})</h2>
+    <ul>
+        {{ range .Site.Pages }}
+        <li>{{ .Kind }}: {{ with .File }}{{ .Path }}{{ else }}[no file]{{ end }} - {{ .Title }}</li>
+        {{ end }}
+    </ul>
+    
+    <h2>All Regular Pages ({{ len .Site.RegularPages }})</h2>
+    <ul>
+        {{ range .Site.RegularPages }}
+        <li>{{ .Kind }}: {{ with .File }}{{ .Path }}{{ else }}[no file]{{ end }} - {{ .Title }}</li>
+        {{ end }}
+    </ul>
+    
+    <h2>Pages in upcoming-events section</h2>
+    {{ $upcomingEvents := where .Site.Pages "Section" "upcoming-events" }}
+    <p>Found {{ len $upcomingEvents }} pages</p>
+    <ul>
+        {{ range $upcomingEvents }}
+        <li>{{ .Kind }}: {{ with .File }}{{ .Path }}{{ else }}[no file]{{ end }} - {{ .Title }} - Draft: {{ if .Draft }}true{{ else }}false{{ end }}</li>
+        {{ end }}
+    </ul>
+
+    <h2>Filtered upcoming-events (non-drafts only)</h2>
+    {{ $events := where (where .Site.Pages "Section" "upcoming-events") ".Params.draft" "!=" true }}
+    {{ $filteredEvents := where $events "Kind" "page" }}
+    <p>Found {{ len $filteredEvents }} filtered pages</p>
+    <ul>
+        {{ range $filteredEvents }}
+        <li>{{ .Kind }}: {{ with .File }}{{ .Path }}{{ else }}[no file]{{ end }} - {{ .Title }} - Date: {{ .Date.Format "2006-01-02" }} - Published: {{ .PublishDate.Format "2006-01-02" }} - IsFuture: {{ .Date.After now }} - IsDraft: {{ .Draft }}</li>
+        {{ end }}
+    </ul>
+    
+    <h2>Debug Event Parameters</h2>
+    <p>Current time: {{ now.Format "2006-01-02 15:04:05" }}</p>
+    <p>BuildFuture setting: {{ .Site.Params.buildFuture }}</p>
+    <p>Custom filter for future events:</p>
+    {{ $customEvents := where (where .Site.Pages "Section" "upcoming-events") "Kind" "page" }}
+    <ul>
+        {{ range $customEvents }}
+        <li>{{ .Title }} - Date: {{ .Date.Format "2006-01-02" }} - In Future: {{ .Date.After now }} - Draft: {{ .Draft }}</li>
+        {{ end }}
+    </ul>
+</body>
+</html>]]>

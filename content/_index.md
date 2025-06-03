@@ -1,5 +1,5 @@
 ---
-title: "Microsoft 365 & Power Platform Community"
+title: "Azure AI Foundry Community"
 image: "images/parker-was-here.svg"
 ---
 
